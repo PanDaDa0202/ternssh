@@ -113,3 +113,215 @@ app.route("/api/v1", v1);
 app.all("*", (c) => c.env.ASSETS.fetch(c.req.raw));
 
 export default app;
+
+/*
+ * ternssh mobile adaptation
+ * Add the entire contents of this file to the END of:
+ * web/src/index.css
+ *
+ * Desktop layout (>= 769px) is unchanged.
+ */
+
+@media (max-width: 768px) {
+  :root {
+    --app-min-width: 0px;
+    --workspace-header-height: 46px;
+    --workspace-header-margin-bottom: 0px;
+    --grid-margin-x: 8px;
+    --grid-margin-y: 8px;
+  }
+
+  html,
+  body,
+  #root,
+  .app-shell,
+  .workspace,
+  .workspace-header {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  html,
+  body,
+  #root,
+  .app-shell {
+    height: 100%;
+  }
+
+  body {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    overscroll-behavior: none;
+  }
+
+  .app-shell {
+    overflow: hidden !important;
+  }
+
+  .workspace-header {
+    box-sizing: border-box;
+    height: var(--workspace-header-height);
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .app-brand {
+    max-width: 42vw;
+    font-size: 12px;
+  }
+
+  .app-brand-logo {
+    width: 20px;
+    height: 20px;
+  }
+
+  .app-header-actions,
+  .app-status {
+    gap: 4px;
+  }
+
+  .workspace {
+    box-sizing: border-box;
+    height: calc(100dvh - var(--workspace-header-height));
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px;
+  }
+
+  /*
+   * The upstream dashboard uses absolute positioning on a 12-column desktop grid.
+   * On phones we deliberately turn it into a single-column document flow.
+   */
+  .grid-dashboard-host {
+    display: flex !important;
+    flex-direction: column;
+    gap: 8px;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 100% !important;
+    padding: 0 !important;
+    background-size: 48px 48px;
+  }
+
+  .grid-dashboard-dots {
+    position: fixed;
+  }
+
+  .grid-dashboard-host > .grid-dashboard-item {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: min(68dvh, 620px) !important;
+    min-height: 360px !important;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    touch-action: auto !important;
+    will-change: auto;
+  }
+
+  /* Server list is more useful when compact. */
+  .grid-dashboard-host > .grid-dashboard-item:has(.server-list-widget) {
+    height: min(46dvh, 430px) !important;
+    min-height: 280px !important;
+  }
+
+  /* Give SSH terminal most of the phone screen. */
+  .grid-dashboard-host > .grid-dashboard-item:has(.terminal-widget-host) {
+    height: calc(100dvh - var(--workspace-header-height) - 24px) !important;
+    min-height: 520px !important;
+  }
+
+  /* File manager gets a comfortable full-screen-like area. */
+  .grid-dashboard-host > .grid-dashboard-item:has(.file-manager-widget) {
+    height: min(76dvh, 700px) !important;
+    min-height: 480px !important;
+  }
+
+  .widget-drag-handle {
+    height: 38px;
+    padding-left: 8px !important;
+  }
+
+  /* Dragging/resizing a dashboard is a desktop interaction.
+     Disable the handles on touch-sized screens without changing desktop. */
+  .widget-drag-grip,
+  .widget-resize-handle {
+    display: none !important;
+  }
+
+  .widget-drag-actions {
+    gap: 4px;
+    padding-right: 4px;
+  }
+
+  .widget-body {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .server-list-widget,
+  .file-manager-widget,
+  .terminal-widget-host {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Avoid iOS zooming the page when focusing small form fields. */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Terminal / xterm mobile sizing. */
+  .terminal-widget-host,
+  .terminal-widget-host .xterm,
+  .terminal-widget-host .xterm-screen,
+  .terminal-widget-host .xterm-viewport {
+    max-width: 100% !important;
+  }
+
+  .terminal-widget-host .xterm {
+    touch-action: pan-y;
+  }
+
+  .workspace-toast {
+    top: calc(var(--workspace-header-height) + 6px);
+    width: calc(100vw - 24px);
+    max-width: none;
+    box-sizing: border-box;
+    text-align: center;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 420px) {
+  .workspace {
+    padding: 6px;
+  }
+
+  .grid-dashboard-host {
+    gap: 6px;
+  }
+
+  .widget-drag-label {
+    font-size: 11px;
+  }
+
+  .grid-dashboard-host > .grid-dashboard-item:has(.terminal-widget-host) {
+    min-height: 500px !important;
+  }
+}
+
+/* Landscape phones: prioritize terminal height without forcing huge vertical cards. */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  .grid-dashboard-host > .grid-dashboard-item {
+    height: calc(100dvh - var(--workspace-header-height) - 18px) !important;
+    min-height: 320px !important;
+  }
+}
