@@ -24,3 +24,9 @@ input,textarea,select{font-size:16px!important}
 .mobile-tabbar button{border:0;background:transparent;color:var(--color-muted-foreground);font:inherit;font-size:13px;border-radius:6px}
 .mobile-tabbar button.active{background:var(--color-primary);color:var(--color-primary-foreground);font-weight:600}
 }
+
+@media (max-width:768px){
+.mobile-tabbar{grid-template-columns:repeat(4,1fr)!important}
+.grid-dashboard-host.mobile-dashboard-mode{display:flex!important;overflow-y:auto!important;padding-bottom:8px!important}
+.grid-dashboard-host.mobile-dashboard-mode>.grid-dashboard-item.mobile-dashboard-item{display:flex!important;position:relative!important;width:100%!important;height:auto!important;min-height:260px!important;max-height:70dvh!important;flex:0 0 auto!important;transform:none!important}
+}
